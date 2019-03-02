@@ -11,31 +11,31 @@
 #import "RNSVGTextProperties.h"
 #import "RNSVGFontData.h"
 
-static NSCharacterSet *RNSVGTSpan_separators = nil;
-static CGFloat RNSVGTSpan_radToDeg = 180 / (CGFloat)M_PI;
+static NSCharacterSet *kSeparators = nil;
+static const CGFloat kRadToDeg = 180 / (CGFloat)M_PI;
 
 @implementation RNSVGTSpan
 {
-    CGFloat startOffset;
+    CGFloat _startOffset;
     CGFloat _pathLength;
-    RNSVGTextPath *textPath;
-    NSArray *lengths;
-    NSArray *lines;
-    NSUInteger lineCount;
-    BOOL isClosed;
-    NSMutableArray *emoji;
-    NSMutableArray *emojiTransform;
+    RNSVGTextPath *_textPath;
+    NSArray *_lengths;
+    NSArray *_lines;
+    NSUInteger _lineCount;
+    BOOL _isClosed;
+    NSMutableArray *_emoji;
+    NSMutableArray *_emojiTransform;
 }
 
 - (id)init
 {
     if (self = [super init]) {
-      if (RNSVGTSpan_separators == nil) {
-          RNSVGTSpan_separators = [NSCharacterSet whitespaceCharacterSet];
+      if (kSeparators == nil) {
+          kSeparators = [NSCharacterSet whitespaceCharacterSet];
       }
 
-      emoji = [NSMutableArray arrayWithCapacity:0];
-      emojiTransform = [NSMutableArray arrayWithCapacity:0];
+      _emoji = [NSMutableArray arrayWithCapacity:0];
+      _emojiTransform = [NSMutableArray arrayWithCapacity:0];
     }
     return self;
 }
@@ -53,12 +53,12 @@ static CGFloat RNSVGTSpan_radToDeg = 180 / (CGFloat)M_PI;
 {
     if (self.content) {
         if (self.path) {
-            NSUInteger count = [emoji count];
+            NSUInteger count = [_emoji count];
             RNSVGGlyphContext* gc = [self.textRoot getGlyphContext];
             CGFloat fontSize = [gc getFontSize];
             for (NSUInteger i = 0; i < count; i++) {
-                UILabel *label = [emoji objectAtIndex:i];
-                NSValue *transformValue = [emojiTransform objectAtIndex:i];
+                UILabel *label = [_emoji objectAtIndex:i];
+                NSValue *transformValue = [_emojiTransform objectAtIndex:i];
                 CGAffineTransform transform = [transformValue CGAffineTransformValue];
                 CGContextConcatCTM(context, transform);
                 CGContextTranslateCTM(context, 0, -fontSize);
@@ -295,7 +295,7 @@ static CGFloat RNSVGTSpan_radToDeg = 180 / (CGFloat)M_PI;
     CGFloat textMeasure = CGRectGetWidth(textBounds);
     CGFloat offset = [RNSVGTSpan getTextAnchorOffset:textAnchor width:textMeasure];
 
-    bool hasTextPath = textPath != nil;
+    bool hasTextPath = _textPath != nil;
 
     int side = 1;
     CGFloat startOfRendering = 0;
@@ -324,7 +324,7 @@ static CGFloat RNSVGTSpan_radToDeg = 180 / (CGFloat)M_PI;
 
          Adding 'side' was resolved at the Sydney (2015) meeting.
          */
-        side = RNSVGTextPathSideFromString([textPath side]) == RNSVGTextPathSideRight ? -1 : 1;
+        side = RNSVGTextPathSideFromString([_textPath side]) == RNSVGTextPathSideRight ? -1 : 1;
         /*
          Name
          startOffset
@@ -363,17 +363,17 @@ static CGFloat RNSVGTSpan_radToDeg = 180 / (CGFloat)M_PI;
          a point on the path equal distance in both directions from the initial position on
          the path is reached.
          */
-        CGFloat absoluteStartOffset = [RNSVGPropHelper fromRelative:textPath.startOffset
+        CGFloat absoluteStartOffset = [RNSVGPropHelper fromRelative:_textPath.startOffset
                                                           relative:_pathLength
                                                           fontSize:fontSize];
         offset += absoluteStartOffset;
-        if (isClosed) {
+        if (_isClosed) {
             CGFloat halfPathDistance = _pathLength / 2;
             startOfRendering = absoluteStartOffset + (textAnchor == RNSVGTextAnchorMiddle ? -halfPathDistance : 0);
             endOfRendering = startOfRendering + _pathLength;
         }
         /*
-         RNSVGTextPathSpacing spacing = textPath.getSpacing();
+         RNSVGTextPathSpacing spacing = _textPath.getSpacing();
          if (spacing == RNSVGTextPathSpacing.auto) {
          // Hmm, what to do here?
          // https://svgwg.org/svg2-draft/text.html#TextPathElementSpacingAttribute
@@ -677,8 +677,8 @@ static CGFloat RNSVGTSpan_radToDeg = 180 / (CGFloat)M_PI;
         }
     }
 
-    [emoji removeAllObjects];
-    [emojiTransform removeAllObjects];
+    [_emoji removeAllObjects];
+    [_emojiTransform removeAllObjects];
 
     CFArrayRef runs = CTLineGetGlyphRuns(line);
     CFIndex runEnd = CFArrayGetCount(runs);
@@ -722,7 +722,7 @@ static CGFloat RNSVGTSpan_radToDeg = 180 / (CGFloat)M_PI;
 
             CFIndex currIndex = indices[g];
             unichar currentChar = [str characterAtIndex:currIndex];
-            bool isWordSeparator = [RNSVGTSpan_separators characterIsMember:currentChar];
+            bool isWordSeparator = [kSeparators characterIsMember:currentChar];
             CGFloat wordSpace = isWordSeparator ? wordSpacing : 0;
             CGFloat spacing = wordSpace + letterSpacing;
             CGFloat advance = charWidth + spacing;
@@ -731,7 +731,7 @@ static CGFloat RNSVGTSpan_radToDeg = 180 / (CGFloat)M_PI;
             CGFloat y = [gc nextY];
             CGFloat dx = [gc nextDeltaX];
             CGFloat dy = [gc nextDeltaY];
-            CGFloat r = [gc nextRotation] / RNSVGTSpan_radToDeg;
+            CGFloat r = [gc nextRotation] / kRadToDeg;
 
             if (isWordSeparator) {
                 continue;
@@ -783,28 +783,28 @@ static CGFloat RNSVGTSpan_radToDeg = 180 / (CGFloat)M_PI;
 
                 // Investigation suggests binary search is faster at lineCount >= 16
                 // https://gist.github.com/msand/4c7993319425f9d7933be58ad9ada1a4
-                NSUInteger i = lineCount < 16 ?
-                [lengths
+                NSUInteger i = _lineCount < 16 ?
+                [_lengths
                  indexOfObjectPassingTest:^(NSNumber* length, NSUInteger index, BOOL * _Nonnull stop) {
                      BOOL contains = midPoint <= [length doubleValue];
                      return contains;
                  }]
                 :
-                [lengths
+                [_lengths
                  indexOfObject:[NSNumber numberWithDouble:midPoint]
-                 inSortedRange:NSMakeRange(0, lineCount)
+                 inSortedRange:NSMakeRange(0, _lineCount)
                  options:NSBinarySearchingInsertionIndex
                  usingComparator:^(NSNumber* obj1, NSNumber* obj2) {
                      return [obj1 compare:obj2];
                  }];
 
-                CGFloat totalLength = (CGFloat)[lengths[i] doubleValue];
-                CGFloat prevLength = i == 0 ? 0 : (CGFloat)[lengths[i - 1] doubleValue];
+                CGFloat totalLength = (CGFloat)[_lengths[i] doubleValue];
+                CGFloat prevLength = i == 0 ? 0 : (CGFloat)[_lengths[i - 1] doubleValue];
 
                 CGFloat length = totalLength - prevLength;
                 CGFloat percent = (midPoint - prevLength) / length;
 
-                NSArray * points = [lines objectAtIndex: i];
+                NSArray * points = [_lines objectAtIndex: i];
                 CGPoint p1 = [[points objectAtIndex: 0] CGPointValue];
                 CGPoint p2 = [[points objectAtIndex: 1] CGPointValue];
 
@@ -884,19 +884,19 @@ static CGFloat RNSVGTSpan_radToDeg = 180 / (CGFloat)M_PI;
 
 - (void)setupTextPath:(CGContextRef)context
 {
-    lines = nil;
-    lengths = nil;
-    textPath = nil;
+    _lines = nil;
+    _lengths = nil;
+    _textPath = nil;
     RNSVGText *parent = (RNSVGText*)[self superview];
 
     while (parent) {
         if ([parent class] == [RNSVGTextPath class]) {
-            textPath = (RNSVGTextPath*) parent;
-            [textPath getPathLength:&_pathLength
-                          lineCount:&lineCount
-                            lengths:&lengths
-                              lines:&lines
-                           isClosed:&isClosed];
+            _textPath = (RNSVGTextPath*) parent;
+            [_textPath getPathLength:&_pathLength
+                           lineCount:&_lineCount
+                             lengths:&_lengths
+                               lines:&_lines
+                            isClosed:&_isClosed];
             break;
         } else if (![parent isKindOfClass:[RNSVGText class]]) {
             break;
