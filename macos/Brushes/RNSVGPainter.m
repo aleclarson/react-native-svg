@@ -24,7 +24,7 @@
 
 - (instancetype)initWithPointsArray:(NSArray<RNSVGLength *> *)pointsArray
 {
-    if ((self = [super init])) {
+    if (self = [super init]) {
         _points = pointsArray;
     }
     return self;

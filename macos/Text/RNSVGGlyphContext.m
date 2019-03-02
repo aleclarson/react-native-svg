@@ -6,8 +6,8 @@
 #import "RNSVGText.h"
 
 // https://www.w3.org/TR/SVG/text.html#TSpanElement
-@interface RNSVGGlyphContext () {
-@public
+@interface RNSVGGlyphContext ()
+{
     // Current stack (one per node push/pop)
     NSMutableArray *mFontContext_;
 
@@ -107,6 +107,64 @@
 
 @implementation RNSVGGlyphContext
 
+- (instancetype)initWithWidth:(CGFloat)width
+                       height:(CGFloat)height
+{
+    if (self = [super init]) {
+      self->mFontContext_ = [[NSMutableArray alloc]init];
+      self->mXsContext_ = [[NSMutableArray alloc]init];
+      self->mYsContext_ = [[NSMutableArray alloc]init];
+      self->mDXsContext_ = [[NSMutableArray alloc]init];
+      self->mDYsContext_ = [[NSMutableArray alloc]init];
+      self->mRsContext_ = [[NSMutableArray alloc]init];
+
+      self->mXIndices_ = [[NSMutableArray alloc]init];
+      self->mYIndices_ = [[NSMutableArray alloc]init];
+      self->mDXIndices_ = [[NSMutableArray alloc]init];
+      self->mDYIndices_ = [[NSMutableArray alloc]init];
+      self->mRIndices_ = [[NSMutableArray alloc]init];
+
+      self->mXsIndices_ = [[NSMutableArray alloc]init];
+      self->mYsIndices_ = [[NSMutableArray alloc]init];
+      self->mDXsIndices_ = [[NSMutableArray alloc]init];
+      self->mDYsIndices_ = [[NSMutableArray alloc]init];
+      self->mRsIndices_ = [[NSMutableArray alloc]init];
+
+      self->mFontSize_ = RNSVGFontData_DEFAULT_FONT_SIZE;
+      self->topFont_ = [RNSVGFontData Defaults];
+
+      self->mXs_ = [[NSArray alloc]init];
+      self->mYs_ = [[NSArray alloc]init];
+      self->mDXs_ = [[NSArray alloc]init];
+      self->mDYs_ = [[NSArray alloc]init];
+      self->mRs_ = [[NSArray alloc]initWithObjects:[RNSVGLength lengthWithNumber:0], nil];
+
+      self->mXIndex_ = -1;
+      self->mYIndex_ = -1;
+      self->mDXIndex_ = -1;
+      self->mDYIndex_ = -1;
+      self->mRIndex_ = -1;
+
+      self->mWidth_ = width;
+      self->mHeight_ = height;
+
+      [self->mXsContext_ addObject:self->mXs_];
+      [self->mYsContext_ addObject:self->mYs_];
+      [self->mDXsContext_ addObject:self->mDXs_];
+      [self->mDYsContext_ addObject:self->mDYs_];
+      [self->mRsContext_ addObject:self->mRs_];
+
+      [self->mXIndices_ addObject:[NSNumber numberWithLong:self->mXIndex_]];
+      [self->mYIndices_ addObject:[NSNumber numberWithLong:self->mYIndex_]];
+      [self->mDXIndices_ addObject:[NSNumber numberWithLong:self->mDXIndex_]];
+      [self->mDYIndices_ addObject:[NSNumber numberWithLong:self->mDYIndex_]];
+      [self->mRIndices_ addObject:[NSNumber numberWithLong:self->mRIndex_]];
+
+      [self->mFontContext_ addObject:self->topFont_];
+      [self pushIndices];
+    }
+    return self;
+}
 
 - (CTFontRef)getGlyphFont
 {
@@ -149,64 +207,8 @@
     [self->mRsIndices_ addObject:[NSNumber numberWithLong:self->mRsIndex_]];
 }
 
-- (instancetype)initWithWidth:(CGFloat)width
-                       height:(CGFloat)height {
-    self = [super init];
-    self->mFontContext_ = [[NSMutableArray alloc]init];
-    self->mXsContext_ = [[NSMutableArray alloc]init];
-    self->mYsContext_ = [[NSMutableArray alloc]init];
-    self->mDXsContext_ = [[NSMutableArray alloc]init];
-    self->mDYsContext_ = [[NSMutableArray alloc]init];
-    self->mRsContext_ = [[NSMutableArray alloc]init];
-
-    self->mXIndices_ = [[NSMutableArray alloc]init];
-    self->mYIndices_ = [[NSMutableArray alloc]init];
-    self->mDXIndices_ = [[NSMutableArray alloc]init];
-    self->mDYIndices_ = [[NSMutableArray alloc]init];
-    self->mRIndices_ = [[NSMutableArray alloc]init];
-
-    self->mXsIndices_ = [[NSMutableArray alloc]init];
-    self->mYsIndices_ = [[NSMutableArray alloc]init];
-    self->mDXsIndices_ = [[NSMutableArray alloc]init];
-    self->mDYsIndices_ = [[NSMutableArray alloc]init];
-    self->mRsIndices_ = [[NSMutableArray alloc]init];
-
-    self->mFontSize_ = RNSVGFontData_DEFAULT_FONT_SIZE;
-    self->topFont_ = [RNSVGFontData Defaults];
-
-    self->mXs_ = [[NSArray alloc]init];
-    self->mYs_ = [[NSArray alloc]init];
-    self->mDXs_ = [[NSArray alloc]init];
-    self->mDYs_ = [[NSArray alloc]init];
-    self->mRs_ = [[NSArray alloc]initWithObjects:[RNSVGLength lengthWithNumber:0], nil];
-
-    self->mXIndex_ = -1;
-    self->mYIndex_ = -1;
-    self->mDXIndex_ = -1;
-    self->mDYIndex_ = -1;
-    self->mRIndex_ = -1;
-
-    self->mWidth_ = width;
-    self->mHeight_ = height;
-
-    [self->mXsContext_ addObject:self->mXs_];
-    [self->mYsContext_ addObject:self->mYs_];
-    [self->mDXsContext_ addObject:self->mDXs_];
-    [self->mDYsContext_ addObject:self->mDYs_];
-    [self->mRsContext_ addObject:self->mRs_];
-
-    [self->mXIndices_ addObject:[NSNumber numberWithLong:self->mXIndex_]];
-    [self->mYIndices_ addObject:[NSNumber numberWithLong:self->mYIndex_]];
-    [self->mDXIndices_ addObject:[NSNumber numberWithLong:self->mDXIndex_]];
-    [self->mDYIndices_ addObject:[NSNumber numberWithLong:self->mDYIndex_]];
-    [self->mRIndices_ addObject:[NSNumber numberWithLong:self->mRIndex_]];
-
-    [self->mFontContext_ addObject:self->topFont_];
-    [self pushIndices];
-    return self;
-}
-
-- (RNSVGFontData *)getFont {
+- (RNSVGFontData *)getFont
+{
     return topFont_;
 }
 
@@ -244,7 +246,8 @@
 }
 
 - (void)pushContext:(RNSVGGroup*)node
-               font:(NSDictionary*)font {
+               font:(NSDictionary*)font
+{
     [self pushNode:node andFont:font];
     [self pushIndices];
 }
@@ -255,7 +258,8 @@
                   y:(NSArray<RNSVGLength*>*)y
              deltaX:(NSArray<RNSVGLength*>*)deltaX
              deltaY:(NSArray<RNSVGLength*>*)deltaY
-             rotate:(NSArray<RNSVGLength*>*)rotate {
+             rotate:(NSArray<RNSVGLength*>*)rotate
+{
     [self pushNode:(RNSVGGroup*)node andFont:font];
     if (x != nil && [x count] != 0) {
         mXsIndex_++;
@@ -295,7 +299,8 @@
     [self pushIndices];
 }
 
-- (void)popContext {
+- (void)popContext
+{
     [mFontContext_ removeLastObject];
     [mXsIndices_ removeLastObject];
     [mYsIndices_ removeLastObject];
@@ -385,11 +390,13 @@
  * Except for any additional information provided in this specification,
  * the normative definition of the property is in CSS2 ([CSS2], section 15.2.4).
  */
-- (CGFloat)getFontSize {
+- (CGFloat)getFontSize
+{
     return mFontSize_;
 }
 
-- (CGFloat)nextXWithDouble:(CGFloat)advance {
+- (CGFloat)nextXWithDouble:(CGFloat)advance
+{
     [RNSVGGlyphContext incrementIndices:mXIndices_ topIndex:mXsIndex_];
     long nextIndex = mXIndex_ + 1;
     if (nextIndex < [mXs_ count]) {
@@ -404,7 +411,8 @@
     return mX_;
 }
 
-- (CGFloat)nextY {
+- (CGFloat)nextY
+{
     [RNSVGGlyphContext incrementIndices:mYIndices_ topIndex:mYsIndex_];
     long nextIndex = mYIndex_ + 1;
     if (nextIndex < [mYs_ count]) {
@@ -418,7 +426,8 @@
     return mY_;
 }
 
-- (CGFloat)nextDeltaX {
+- (CGFloat)nextDeltaX
+{
     [RNSVGGlyphContext incrementIndices:mDXIndices_ topIndex:mDXsIndex_];
     long nextIndex = mDXIndex_ + 1;
     if (nextIndex < [mDXs_ count]) {
@@ -432,7 +441,8 @@
     return mDX_;
 }
 
-- (CGFloat)nextDeltaY {
+- (CGFloat)nextDeltaY
+{
     [RNSVGGlyphContext incrementIndices:mDYIndices_ topIndex:mDYsIndex_];
     long nextIndex = mDYIndex_ + 1;
     if (nextIndex < [mDYs_ count]) {
@@ -446,7 +456,8 @@
     return mDY_;
 }
 
-- (CGFloat)nextRotation {
+- (CGFloat)nextRotation
+{
     [RNSVGGlyphContext incrementIndices:mRIndices_ topIndex:mRsIndex_];
     long nextIndex = mRIndex_ + 1;
     long count = [mRs_ count];
@@ -458,11 +469,14 @@
     return [mRs_[mRIndex_] value];
 }
 
-- (CGFloat)getWidth {
+- (CGFloat)getWidth
+{
     return mWidth_;
 }
 
-- (CGFloat)getHeight {
+- (CGFloat)getHeight
+{
     return mHeight_;
 }
+
 @end

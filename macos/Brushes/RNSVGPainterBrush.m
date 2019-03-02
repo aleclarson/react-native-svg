@@ -15,7 +15,7 @@
 
 - (instancetype)initWithArray:(NSArray *)array
 {
-    if ((self = [super initWithArray:array])) {
+    if (self = [super initWithArray:array]) {
         if (array.count != 2) {
             RCTLogError(@"-[%@ %@] expects 2 elements, received %@",
                         self.class, NSStringFromSelector(_cmd), array);

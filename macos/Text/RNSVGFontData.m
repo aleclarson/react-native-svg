@@ -23,7 +23,8 @@ RNSVGFontData *RNSVGFontData_Defaults;
 
 @implementation RNSVGFontData
 
-+ (instancetype)Defaults {
++ (instancetype)Defaults
+{
     if (!RNSVGFontData_Defaults) {
         RNSVGFontData *self = [RNSVGFontData alloc];
         self->fontData = nil;
@@ -45,14 +46,16 @@ RNSVGFontData *RNSVGFontData_Defaults;
 }
 
 + (CGFloat)toAbsoluteWithNSString:(NSString *)string
-                        fontSize:(CGFloat)fontSize {
+                        fontSize:(CGFloat)fontSize
+{
     return [RNSVGPropHelper fromRelativeWithNSString:string
                                          relative:0
                                          fontSize:fontSize];
 }
 
 + (instancetype)initWithNSDictionary:(NSDictionary *)font
-                              parent:(RNSVGFontData *)parent {
+                              parent:(RNSVGFontData *)parent
+{
     RNSVGFontData *data = [RNSVGFontData alloc];
     CGFloat parentFontSize = parent->fontSize;
     if ([font objectForKey:FONT_SIZE]) {

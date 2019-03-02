@@ -167,7 +167,8 @@
     _meetOrSlice = meetOrSlice;
 }
 
-- (void)drawToContext:(CGContextRef)context withRect:(CGRect)rect {
+- (void)drawToContext:(CGContextRef)context withRect:(CGRect)rect
+{
     rendered = true;
     self.initialCTM = CGContextGetCTM(context);
     self.invInitialCTM = CGAffineTransformInvert(self.initialCTM);

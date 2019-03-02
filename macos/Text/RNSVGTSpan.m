@@ -29,15 +29,14 @@ static CGFloat RNSVGTSpan_radToDeg = 180 / (CGFloat)M_PI;
 
 - (id)init
 {
-    self = [super init];
+    if (self = [super init]) {
+      if (RNSVGTSpan_separators == nil) {
+          RNSVGTSpan_separators = [NSCharacterSet whitespaceCharacterSet];
+      }
 
-    if (RNSVGTSpan_separators == nil) {
-        RNSVGTSpan_separators = [NSCharacterSet whitespaceCharacterSet];
+      emoji = [NSMutableArray arrayWithCapacity:0];
+      emojiTransform = [NSMutableArray arrayWithCapacity:0];
     }
-
-    emoji = [NSMutableArray arrayWithCapacity:0];
-    emojiTransform = [NSMutableArray arrayWithCapacity:0];
-
     return self;
 }
 

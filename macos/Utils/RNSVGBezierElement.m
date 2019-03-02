@@ -9,11 +9,10 @@
 #pragma mark - Bezier Element -
 
 @implementation RNSVGBezierElement
+
 - (instancetype) init
 {
-    self = [super init];
-    if (self)
-    {
+    if (self = [super init]) {
         _elementType = kCGPathElementMoveToPoint;
         _point = RNSVGNULLPOINT;
         _controlPoint1 = RNSVGNULLPOINT;

@@ -269,7 +269,8 @@ UInt32 saturate(CGFloat value) {
     CGContextRestoreGState(context);
 }
 
-- (void)prepareStrokeDash:(NSUInteger)count strokeDasharray:(NSArray<RNSVGLength *> *)strokeDasharray {
+- (void)prepareStrokeDash:(NSUInteger)count strokeDasharray:(NSArray<RNSVGLength *> *)strokeDasharray
+{
     if (strokeDasharray != _sourceStrokeDashArray) {
         CGFloat *dash = _strokeDashArrayData;
         _strokeDashArrayData = realloc(dash, sizeof(CGFloat) * count);

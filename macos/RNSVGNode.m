@@ -201,7 +201,8 @@ CGFloat const RNSVG_DEFAULT_FONT_SIZE = 12;
     [container invalidate];
 }
 
-- (void)setClientRect:(CGRect)clientRect {
+- (void)setClientRect:(CGRect)clientRect
+{
     if (CGRectEqualToRect(_clientRect, clientRect)) {
         return;
     }
@@ -432,7 +433,8 @@ CGFloat const RNSVG_DEFAULT_FONT_SIZE = 12;
     return [self fromRelative:length];
 }
 
-- (CGFloat)fromRelative:(RNSVGLength*)length {
+- (CGFloat)fromRelative:(RNSVGLength*)length
+{
     CGFloat unit;
     switch (length.unit) {
         case SVG_LENGTHTYPE_EMS:
@@ -479,7 +481,8 @@ CGFloat const RNSVG_DEFAULT_FONT_SIZE = 12;
     return CGRectGetHeight([self getContextBounds]);
 }
 
-- (CGFloat)getContextDiagonal {
+- (CGFloat)getContextDiagonal
+{
     CGRect bounds = [self getContextBounds];
     CGFloat width = CGRectGetWidth(bounds);
     CGFloat height = CGRectGetHeight(bounds);
@@ -489,7 +492,8 @@ CGFloat const RNSVG_DEFAULT_FONT_SIZE = 12;
     return r;
 }
 
-- (CGFloat) getCanvasWidth {
+- (CGFloat) getCanvasWidth
+{
     if (canvasWidth != -1) {
         return canvasWidth;
     }
@@ -503,7 +507,8 @@ CGFloat const RNSVG_DEFAULT_FONT_SIZE = 12;
     return canvasWidth;
 }
 
-- (CGFloat) getCanvasHeight {
+- (CGFloat) getCanvasHeight
+{
     if (canvasHeight != -1) {
         return canvasHeight;
     }
@@ -517,7 +522,8 @@ CGFloat const RNSVG_DEFAULT_FONT_SIZE = 12;
     return canvasHeight;
 }
 
-- (CGFloat) getCanvasDiagonal {
+- (CGFloat) getCanvasDiagonal
+{
     if (canvasDiagonal != -1) {
         return canvasDiagonal;
     }

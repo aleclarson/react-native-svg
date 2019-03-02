@@ -3,18 +3,16 @@
 
 @implementation RNSVGLength
 
-- (instancetype) init
+- (instancetype)init
 {
-    self = [super init];
-    if (self)
-    {
+    if (self = [super init]) {
         _value = 0;
         _unit = SVG_LENGTHTYPE_UNKNOWN;
     }
     return self;
 }
 
-+ (instancetype) lengthWithNumber:(CGFloat)number
++ (instancetype)lengthWithNumber:(CGFloat)number
 {
     RNSVGLength *length = [[self alloc] init];
     length.unit = SVG_LENGTHTYPE_NUMBER;
@@ -22,7 +20,8 @@
     return length;
 }
 
-+ (instancetype) lengthWithString: (NSString *) lengthString {
++ (instancetype)lengthWithString:(NSString *)lengthString
+{
     NSString *length = [lengthString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     NSUInteger stringLength = [length length];
     NSInteger percentIndex = stringLength - 1;
@@ -68,7 +67,8 @@
     return output;
 }
 
-- (BOOL) isEqualTo: (RNSVGLength *)other {
+- (BOOL)isEqualTo:(RNSVGLength *)other
+{
     return self.unit == other.unit && self.value == other.value;
 }
 
