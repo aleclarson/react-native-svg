@@ -7,6 +7,7 @@
  */
 
 #import <React/NSView+React.h>
+#import "NSView+Geometry.h"
 #import "RNSVGCGFCRule.h"
 #import "RNSVGRootView.h"
 @class RNSVGGroup;

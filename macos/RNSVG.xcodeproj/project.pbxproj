@@ -45,6 +45,7 @@
 		10ED4A9E1CF0656A0078BC02 /* RNSVGClipPathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 10ED4A9D1CF0656A0078BC02 /* RNSVGClipPathManager.m */; };
 		10ED4AA21CF078830078BC02 /* RNSVGNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 10ED4AA11CF078830078BC02 /* RNSVGNode.m */; };
 		10FDEEB21D3FB60500A5C46C /* RNSVGPainterBrush.m in Sources */ = {isa = PBXBuildFile; fileRef = 10FDEEB11D3FB60500A5C46C /* RNSVGPainterBrush.m */; };
+		703CFABC222B181D0080C330 /* NSView+Geometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 703CFABB222B181D0080C330 /* NSView+Geometry.m */; };
 		7F08CE9A1E23476900650F83 /* RNSVGTextPathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F08CE971E23476900650F83 /* RNSVGTextPathManager.m */; };
 		7F08CE9B1E23476900650F83 /* RNSVGTSpanManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F08CE991E23476900650F83 /* RNSVGTSpanManager.m */; };
 		7F08CEA01E23479700650F83 /* RNSVGTextPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F08CE9D1E23479700650F83 /* RNSVGTextPath.m */; };
@@ -165,6 +166,8 @@
 		10FDEEB01D3FB60500A5C46C /* RNSVGPainterBrush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNSVGPainterBrush.h; sourceTree = "<group>"; };
 		10FDEEB11D3FB60500A5C46C /* RNSVGPainterBrush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNSVGPainterBrush.m; sourceTree = "<group>"; };
 		10FDEEB31D3FBED400A5C46C /* RNSVGBrushType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNSVGBrushType.h; sourceTree = "<group>"; };
+		703CFABA222B181D0080C330 /* NSView+Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSView+Geometry.h"; path = "Utils/NSView+Geometry.h"; sourceTree = "<group>"; };
+		703CFABB222B181D0080C330 /* NSView+Geometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSView+Geometry.m"; path = "Utils/NSView+Geometry.m"; sourceTree = "<group>"; };
 		7F08CE961E23476900650F83 /* RNSVGTextPathManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNSVGTextPathManager.h; sourceTree = "<group>"; };
 		7F08CE971E23476900650F83 /* RNSVGTextPathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNSVGTextPathManager.m; sourceTree = "<group>"; };
 		7F08CE981E23476900650F83 /* RNSVGTSpanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNSVGTSpanManager.h; sourceTree = "<group>"; };
@@ -389,6 +392,8 @@
 		1039D29A1CE7212C001E90A8 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				703CFABA222B181D0080C330 /* NSView+Geometry.h */,
+				703CFABB222B181D0080C330 /* NSView+Geometry.m */,
 				B56895A920352B36004DBF1E /* RNSVGBezierElement.h */,
 				B56895A820352B35004DBF1E /* RNSVGBezierElement.m */,
 				7F69160D1E3703D800DA6EDC /* RNSVGUnits.h */,
@@ -517,6 +522,7 @@
 				B56895A720352750004DBF1E /* RNSVGTextProperties.m in Sources */,
 				7FC260D41E34A12A00A39833 /* RNSVGSymbolManager.m in Sources */,
 				7F9CDAFA1E1F809C00E0C805 /* RNSVGPathParser.m in Sources */,
+				703CFABC222B181D0080C330 /* NSView+Geometry.m in Sources */,
 				10BA0D361CE74E3100887C2B /* RNSVGGroupManager.m in Sources */,
 				94F00C5621780D2E00384EA4 /* RNSVGLength.m in Sources */,
 				9424166D213B302600088E93 /* RNSVGPatternManager.m in Sources */,
