@@ -44,6 +44,7 @@ extern CGFloat const RNSVG_DEFAULT_FONT_SIZE;
 @property (nonatomic, assign) CGRect clientRect;
 @property (nonatomic, assign) CGRect pathBounds;
 @property (nonatomic, copy) RCTDirectEventBlock onLayout;
+@property (nonatomic, copy) NSColor *tintColor;
 
 
 /**

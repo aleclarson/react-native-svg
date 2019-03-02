@@ -38,6 +38,7 @@ CGFloat const RNSVG_DEFAULT_FONT_SIZE = 12;
         self.opacity = 1;
         self.transforms = CGAffineTransformIdentity;
         self.invTransform = CGAffineTransformIdentity;
+        self.tintColor = NSColor.blackColor;
         _merging = false;
         _dirty = false;
     }

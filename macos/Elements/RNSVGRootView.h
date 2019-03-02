@@ -28,6 +28,7 @@
 @property (nonatomic, assign) CGRect boundingBox;
 @property (nonatomic, assign) CGAffineTransform initialCTM;
 @property (nonatomic, assign) CGAffineTransform invInitialCTM;
+@property (nonatomic, copy) NSColor *tintColor;
 
 
 

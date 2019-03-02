@@ -28,6 +28,7 @@
         // This is necessary to ensure that [self setNeedsDisplay] actually triggers
         // a redraw when our parent transitions between hidden and visible.
         self.contentMode = UIViewContentModeRedraw;
+        self.tintColor = NSColor.blackColor;
         rendered = false;
     }
     return self;
