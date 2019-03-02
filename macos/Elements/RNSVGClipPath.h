@@ -10,7 +10,7 @@
 
 #import "RNSVGContainer.h"
 #import "RNSVGGroup.h"
-#import "RNSVGSvgView.h"
+#import "RNSVGRootView.h"
 
 @interface RNSVGClipPath : RNSVGGroup
 

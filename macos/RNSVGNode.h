@@ -8,7 +8,7 @@
 
 #import <React/NSView+React.h>
 #import "RNSVGCGFCRule.h"
-#import "RNSVGSvgView.h"
+#import "RNSVGRootView.h"
 @class RNSVGGroup;
 
 /**
@@ -47,9 +47,9 @@ extern CGFloat const RNSVG_DEFAULT_FONT_SIZE;
 
 
 /**
- * RNSVGSvgView which ownes current RNSVGNode
+ * RNSVGRootView which ownes current RNSVGNode
  */
-@property (nonatomic, readonly, weak) RNSVGSvgView *svgView;
+@property (nonatomic, readonly, weak) RNSVGRootView *rootView;
 @property (nonatomic, readonly, weak) RNSVGGroup *textRoot;
 
 - (void)invalidate;

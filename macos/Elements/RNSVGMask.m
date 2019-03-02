@@ -20,7 +20,7 @@
 - (void)parseReference
 {
     self.dirty = false;
-    [self.svgView defineMask:self maskName:self.name];
+    [self.rootView defineMask:self maskName:self.name];
 }
 
 - (void)setX:(RNSVGLength *)x

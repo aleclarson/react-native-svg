@@ -6,12 +6,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#import "RNSVGSvgView.h"
+#import "RNSVGRootView.h"
 #import "RNSVGViewBox.h"
 #import "RNSVGNode.h"
 #import <React/RCTLog.h>
 
-@implementation RNSVGSvgView
+@implementation RNSVGRootView
 {
     NSMutableDictionary<NSString *, RNSVGNode *> *_clipPaths;
     NSMutableDictionary<NSString *, RNSVGNode *> *_templates;
@@ -233,14 +233,8 @@
             continue;
         }
 
-        if (event) {
-            node.active = NO;
-        }
-
-        NSView *hitChild = [node hitTest:transformed withEvent:event];
-
+        NSView *hitChild = [node hitTest:transformed];
         if (hitChild) {
-            node.active = YES;
             return (node.responsible || (node != hitChild)) ? hitChild : self;
         }
     }

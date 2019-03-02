@@ -8,16 +8,16 @@
 
 #import <React/RCTBridge.h>
 #import <React/RCTUIManager.h>
-#import "RNSVGSvgViewManager.h"
-#import "RNSVGSvgView.h"
+#import "RNSVGRootViewManager.h"
+#import "RNSVGRootView.h"
 
-@implementation RNSVGSvgViewManager
+@implementation RNSVGRootViewManager
 
 RCT_EXPORT_MODULE()
 
 - (NSView *)view
 {
-    return [RNSVGSvgView new];
+    return [RNSVGRootView new];
 }
 
 RCT_EXPORT_VIEW_PROPERTY(bbWidth, RNSVGLength*)
@@ -34,11 +34,11 @@ RCT_EXPORT_METHOD(toDataURL:(nonnull NSNumber *)reactTag callback:(RCTResponseSe
 {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,NSView *> *viewRegistry) {
         __kindof NSView *view = viewRegistry[reactTag];
-        if ([view isKindOfClass:[RNSVGSvgView class]]) {
-            RNSVGSvgView *svg = view;
+        if ([view isKindOfClass:[RNSVGRootView class]]) {
+            RNSVGRootView *svg = view;
             callback(@[[svg getDataURL]]);
         } else {
-            RCTLogError(@"Invalid svg returned frin registry, expecting RNSVGSvgView, got: %@", view);
+            RCTLogError(@"Invalid svg returned frin registry, expecting RNSVGRootView, got: %@", view);
         }
     }];
 }

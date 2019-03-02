@@ -10,7 +10,7 @@
 #import <AppKit/AppKit.h>
 #import "RNSVGContainer.h"
 #import "RNSVGCGFCRule.h"
-#import "RNSVGSvgView.h"
+#import "RNSVGRootView.h"
 #import "RNSVGPath.h"
 #import "RNSVGGlyphContext.h"
 

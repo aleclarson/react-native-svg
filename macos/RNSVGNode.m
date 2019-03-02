@@ -13,7 +13,7 @@
 #import "RNSVGGlyphContext.h"
 
 @interface RNSVGNode()
-@property (nonatomic, readwrite, weak) RNSVGSvgView *svgView;
+@property (nonatomic, readwrite, weak) RNSVGRootView *rootView;
 @property (nonatomic, readwrite, weak) RNSVGGroup *textRoot;
 @end
 
@@ -282,7 +282,7 @@ CGFloat const RNSVG_DEFAULT_FONT_SIZE = 12;
 - (CGPathRef)getClipPath:(CGContextRef)context
 {
     if (self.clipPath) {
-        _clipNode = (RNSVGClipPath*)[self.svgView getDefinedClipPath:self.clipPath];
+        _clipNode = (RNSVGClipPath*)[self.rootView getDefinedClipPath:self.clipPath];
         if (_cachedClipPath) {
             CGPathRelease(_cachedClipPath);
         }
@@ -348,23 +348,23 @@ CGFloat const RNSVG_DEFAULT_FONT_SIZE = 12;
     return nil;
 }
 
-- (RNSVGSvgView *)svgView
+- (RNSVGRootView *)rootView
 {
-    if (_svgView) {
-        return _svgView;
+    if (_rootView) {
+        return _rootView;
     }
 
     __kindof NSView *parent = self.superview;
 
-    if ([parent class] == [RNSVGSvgView class]) {
-        _svgView = parent;
+    if ([parent class] == [RNSVGRootView class]) {
+        _rootView = parent;
     } else if ([parent isKindOfClass:[RNSVGNode class]]) {
-        _svgView = ((RNSVGNode *)parent).svgView;
+        _rootView = ((RNSVGNode *)parent).rootView;
     } else {
         RCTLogError(@"RNSVG: %@ should be descendant of a SvgViewShadow.", NSStringFromClass(self.class));
     }
 
-    return _svgView;
+    return _rootView;
 }
 
 - (CGFloat)relativeOnWidthString:(NSString *)length
@@ -534,7 +534,7 @@ CGFloat const RNSVG_DEFAULT_FONT_SIZE = 12;
     self.dirty = false;
     if (self.name) {
         typeof(self) __weak weakSelf = self;
-        [self.svgView defineTemplate:weakSelf templateName:self.name];
+        [self.rootView defineTemplate:weakSelf templateName:self.name];
     }
 }
 

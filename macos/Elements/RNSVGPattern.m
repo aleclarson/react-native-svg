@@ -28,10 +28,10 @@
     [painter setPattern:self];
     
     if (self.patternUnits == kRNSVGUnitsUserSpaceOnUse || self.patternContentUnits == kRNSVGUnitsUserSpaceOnUse) {
-        [painter setUserSpaceBoundingBox:[self.svgView getContextBounds]];
+        [painter setUserSpaceBoundingBox:[self.rootView getContextBounds]];
     }
     
-    [self.svgView definePainter:painter painterName:self.name];
+    [self.rootView definePainter:painter painterName:self.name];
 }
 
 - (void)setX:(RNSVGLength *)x

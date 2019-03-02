@@ -105,10 +105,10 @@
     [painter setRadialGradientColors:self.gradient];
     
     if (self.gradientUnits == kRNSVGUnitsUserSpaceOnUse) {
-        [painter setUserSpaceBoundingBox:[self.svgView getContextBounds]];
+        [painter setUserSpaceBoundingBox:[self.rootView getContextBounds]];
     }
     
-    [self.svgView definePainter:painter painterName:self.name];
+    [self.rootView definePainter:painter painterName:self.name];
 }
 
 @end

@@ -168,7 +168,7 @@ void RNSVGPerformanceBezier_addLine(CGPoint *last, const CGPoint *next, NSMutabl
 
 - (void)getPathLength:(CGFloat*)lengthP lineCount:(NSUInteger*)lineCountP lengths:(NSArray* __strong *)lengthsP lines:(NSArray* __strong *)linesP isClosed:(BOOL*)isClosedP
 {
-    RNSVGNode *template = [self.svgView getDefinedTemplate:self.href];
+    RNSVGNode *template = [self.rootView getDefinedTemplate:self.href];
     CGPathRef path = [template getPath:nil];
 
     if (_path != path) {

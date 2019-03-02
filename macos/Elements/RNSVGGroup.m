@@ -43,8 +43,8 @@
             // no-op
         } else if ([node isKindOfClass:[RNSVGNode class]]) {
             RNSVGNode* svgNode = (RNSVGNode*)node;
-            if (svgNode.responsible && !self.svgView.responsible) {
-                self.svgView.responsible = YES;
+            if (svgNode.responsible && !self.rootView.responsible) {
+                self.rootView.responsible = YES;
             }
 
             if ([node isKindOfClass:[RNSVGRenderable class]]) {
@@ -61,13 +61,13 @@
             if ([node isKindOfClass:[RNSVGRenderable class]]) {
                 [(RNSVGRenderable*)node resetProperties];
             }
-        } else if ([node isKindOfClass:[RNSVGSvgView class]]) {
-            RNSVGSvgView* svgView = (RNSVGSvgView*)node;
-            CGFloat width = [self relativeOnWidth:svgView.bbWidth];
-            CGFloat height = [self relativeOnHeight:svgView.bbHeight];
+        } else if ([node isKindOfClass:[RNSVGRootView class]]) {
+            RNSVGRootView* rootView = (RNSVGRootView*)node;
+            CGFloat width = [self relativeOnWidth:rootView.bbWidth];
+            CGFloat height = [self relativeOnHeight:rootView.bbHeight];
             CGRect rect = CGRectMake(0, 0, width, height);
             CGContextClipToRect(context, rect);
-            [svgView drawToContext:context withRect:rect];
+            [rootView drawToContext:context withRect:rect];
         } else {
             [node drawRect:rect];
         }
@@ -159,7 +159,7 @@
     }
 
     if (self.clipPath) {
-        RNSVGClipPath *clipNode = (RNSVGClipPath*)[self.svgView getDefinedClipPath:self.clipPath];
+        RNSVGClipPath *clipNode = (RNSVGClipPath*)[self.rootView getDefinedClipPath:self.clipPath];
         if ([clipNode isSimpleClipPath]) {
             CGPathRef clipPath = [self getClipPath];
             if (clipPath && !CGPathContainsPoint(clipPath, nil, transformed, clipNode.clipRule == kRNSVGCGFCRuleEvenodd)) {
@@ -195,9 +195,9 @@
                 svgNode.active = YES;
                 return (svgNode.responsible || (svgNode != hitChild)) ? hitChild : self;
             }
-        } else if ([node isKindOfClass:[RNSVGSvgView class]]) {
-            RNSVGSvgView* svgView = (RNSVGSvgView*)node;
-            NSView *hitChild = [svgView hitTest:transformed withEvent:event];
+        } else if ([node isKindOfClass:[RNSVGRootView class]]) {
+            RNSVGRootView* rootView = (RNSVGRootView*)node;
+            NSView *hitChild = [rootView hitTest:transformed withEvent:event];
             if (hitChild) {
                 return hitChild;
             }
@@ -217,7 +217,7 @@
     self.dirty = false;
     if (self.name) {
         typeof(self) __weak weakSelf = self;
-        [self.svgView defineTemplate:weakSelf templateName:self.name];
+        [self.rootView defineTemplate:weakSelf templateName:self.name];
     }
 
     [self traverseSubviews:^(RNSVGNode *node) {

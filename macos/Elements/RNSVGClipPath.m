@@ -13,7 +13,7 @@
 - (void)parseReference
 {
     self.dirty = false;
-    [self.svgView defineClipPath:self clipPathName:self.name];
+    [self.rootView defineClipPath:self clipPathName:self.name];
 }
 
 

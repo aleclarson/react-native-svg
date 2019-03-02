@@ -8,6 +8,6 @@
 
 #import <React/RCTViewManager.h>
 
-@interface RNSVGSvgViewManager : RCTViewManager
+@interface RNSVGRootViewManager : RCTViewManager
 
 @end

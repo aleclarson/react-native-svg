@@ -13,7 +13,8 @@
 
 @class RNSVGNode;
 
-@interface RNSVGSvgView : NSView <RNSVGContainer>
+/** Represents the <svg> element */
+@interface RNSVGRootView : NSView <RNSVGContainer>
 
 @property (nonatomic, strong) RNSVGLength *bbWidth;
 @property (nonatomic, strong) RNSVGLength *bbHeight;
@@ -24,7 +25,6 @@
 @property (nonatomic, strong) NSString *align;
 @property (nonatomic, assign) RNSVGVBMOS meetOrSlice;
 @property (nonatomic, assign) BOOL responsible;
-@property (nonatomic, assign) BOOL active;
 @property (nonatomic, assign) CGRect boundingBox;
 @property (nonatomic, assign) CGAffineTransform initialCTM;
 @property (nonatomic, assign) CGAffineTransform invInitialCTM;

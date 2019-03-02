@@ -159,7 +159,7 @@ void PatternFunction(void* info, CGContextRef context)
     CGFloat w = [self getVal:[_points objectAtIndex:2] relative:width];
     CGFloat h = [self getVal:[_points objectAtIndex:3] relative:height];
 
-    CGAffineTransform viewbox = [self.pattern.svgView getViewBoxTransform];
+    CGAffineTransform viewbox = [self.pattern.rootView getViewBoxTransform];
     CGRect newBounds = CGRectMake(x, y, w, h);
     CGSize size = newBounds.size;
     self.useObjectBoundingBoxForContentUnits = _useContentObjectBoundingBox;

@@ -180,7 +180,7 @@ UInt32 saturate(CGFloat value) {
 
     if (self.mask) {
         // https://www.w3.org/TR/SVG11/masking.html#MaskElement
-        RNSVGMask *_maskNode = (RNSVGMask*)[self.svgView getDefinedMask:self.mask];
+        RNSVGMask *_maskNode = (RNSVGMask*)[self.rootView getDefinedMask:self.mask];
         CGRect bounds = CGContextGetClipBoundingBox(context);
         CGSize boundsSize = bounds.size;
         CGFloat height = boundsSize.height;
@@ -300,12 +300,12 @@ UInt32 saturate(CGFloat value) {
     const CGRect pathBounds = self.pathBounds;
 
     CGAffineTransform current = CGContextGetCTM(context);
-    CGAffineTransform svgToClientTransform = CGAffineTransformConcat(current, self.svgView.invInitialCTM);
+    CGAffineTransform svgToClientTransform = CGAffineTransformConcat(current, self.rootView.invInitialCTM);
     CGRect clientRect = CGRectApplyAffineTransform(pathBounds, svgToClientTransform);
 
     self.clientRect = clientRect;
 
-    CGAffineTransform vbmatrix = self.svgView.getViewBoxTransform;
+    CGAffineTransform vbmatrix = self.rootView.getViewBoxTransform;
     CGAffineTransform transform = CGAffineTransformConcat(self.matrix, self.transforms);
     CGAffineTransform matrix = CGAffineTransformConcat(transform, vbmatrix);
 
@@ -349,7 +349,7 @@ UInt32 saturate(CGFloat value) {
             CGContextClip(context);
             [self.fill paint:context
                      opacity:self.fillOpacity
-                     painter:[self.svgView getDefinedPainter:self.fill.brushRef]
+                     painter:[self.rootView getDefinedPainter:self.fill.brushRef]
                       bounds:pathBounds
              ];
             CGContextRestoreGState(context);
@@ -406,7 +406,7 @@ UInt32 saturate(CGFloat value) {
 
             [self.stroke paint:context
                        opacity:self.strokeOpacity
-                       painter:[self.svgView getDefinedPainter:self.stroke.brushRef]
+                       painter:[self.rootView getDefinedPainter:self.stroke.brushRef]
                         bounds:pathBounds
              ];
             return;
@@ -469,7 +469,7 @@ UInt32 saturate(CGFloat value) {
     }
 
     if (self.clipPath) {
-        RNSVGClipPath *clipNode = (RNSVGClipPath*)[self.svgView getDefinedClipPath:self.clipPath];
+        RNSVGClipPath *clipNode = (RNSVGClipPath*)[self.rootView getDefinedClipPath:self.clipPath];
         if ([clipNode isSimpleClipPath]) {
             CGPathRef clipPath = [self getClipPath];
             if (clipPath && !CGPathContainsPoint(clipPath, nil, transformed, clipNode.clipRule == kRNSVGCGFCRuleEvenodd)) {

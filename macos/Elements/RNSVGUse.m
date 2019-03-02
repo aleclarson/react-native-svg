@@ -65,7 +65,7 @@
 - (void)renderLayerTo:(CGContextRef)context rect:(CGRect)rect
 {
     CGContextTranslateCTM(context, [self relativeOnWidth:self.x], [self relativeOnHeight:self.y]);
-    RNSVGNode* template = [self.svgView getDefinedTemplate:self.href];
+    RNSVGNode* template = [self.rootView getDefinedTemplate:self.href];
     if (template) {
         [self beginTransparencyLayer:context];
         [self clip:context];
@@ -106,7 +106,7 @@
 - (NSView *)hitTest:(CGPoint)point {
     CGPoint transformed = CGPointApplyAffineTransform(point, self.invmatrix);
     transformed =  CGPointApplyAffineTransform(transformed, self.invTransform);
-    RNSVGNode const* template = [self.svgView getDefinedTemplate:self.href];
+    RNSVGNode const* template = [self.rootView getDefinedTemplate:self.href];
     if (event) {
         self.active = NO;
     } else if (self.active) {
