@@ -37,7 +37,9 @@
 - (void)insertReactSubview:(NSView *)subview atIndex:(NSInteger)atIndex
 {
     [super insertReactSubview:subview atIndex:atIndex];
-    [self insertSubview:subview atIndex:atIndex];
+    [self addSubview:subview
+          positioned:NSWindowBelow
+          relativeTo:self.subviews.count ? self.subviews[atIndex] : nil];
     [self invalidate];
 }
 
