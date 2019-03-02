@@ -52,21 +52,21 @@ static const CGFloat kRadToDeg = 180 / (CGFloat)M_PI;
 - (void)renderLayerTo:(CGContextRef)context rect:(CGRect)rect
 {
     if (self.content) {
-        if (self.path) {
-            NSUInteger count = [_emoji count];
-            RNSVGGlyphContext* gc = [self.textRoot getGlyphContext];
-            CGFloat fontSize = [gc getFontSize];
-            for (NSUInteger i = 0; i < count; i++) {
-                UILabel *label = [_emoji objectAtIndex:i];
-                NSValue *transformValue = [_emojiTransform objectAtIndex:i];
-                CGAffineTransform transform = [transformValue CGAffineTransformValue];
-                CGContextConcatCTM(context, transform);
-                CGContextTranslateCTM(context, 0, -fontSize);
-                [label.layer renderInContext:context];
-                CGContextTranslateCTM(context, 0, fontSize);
-                CGContextConcatCTM(context, CGAffineTransformInvert(transform));
-            }
-        }
+//        if (self.path) {
+//            NSUInteger count = [_emoji count];
+//            RNSVGGlyphContext* gc = [self.textRoot getGlyphContext];
+//            CGFloat fontSize = [gc getFontSize];
+//            for (NSUInteger i = 0; i < count; i++) {
+//                UILabel *label = [_emoji objectAtIndex:i];
+//                NSValue *transformValue = [_emojiTransform objectAtIndex:i];
+//                CGAffineTransform transform = [transformValue CGAffineTransformValue];
+//                CGContextConcatCTM(context, transform);
+//                CGContextTranslateCTM(context, 0, -fontSize);
+//                [label.layer renderInContext:context];
+//                CGContextTranslateCTM(context, 0, fontSize);
+//                CGContextConcatCTM(context, CGAffineTransformInvert(transform));
+//            }
+//        }
         [self renderPathTo:context rect:rect];
     } else {
         [self clip:context];
@@ -828,32 +828,32 @@ static const CGFloat kRadToDeg = 180 / (CGFloat)M_PI;
             CGFloat width = box.size.width;
 
             if (width == 0) { // Render unicode emoji
-                UILabel *label = [[UILabel alloc] init];
-                CFIndex startIndex = indices[g];
-                long len = MAX(1, endIndex - startIndex);
-                NSRange range = NSMakeRange(startIndex, len);
-                NSString* currChars = [str substringWithRange:range];
-                label.text = currChars;
-                label.opaque = NO;
-                label.backgroundColor = UIColor.clearColor;
-                UIFont * customFont = [UIFont systemFontOfSize:fontSize];
-
-                CGSize measuredSize = [currChars sizeWithAttributes:
-                                       @{NSFontAttributeName:customFont}];
-                label.font = customFont;
-                CGFloat width = ceil(measuredSize.width);
-                CGFloat height = ceil(measuredSize.height);
-                CGRect bounds = CGRectMake(0, 0, width, height);
-                label.frame = bounds;
-
-                CGContextConcatCTM(context, transform);
-                CGContextTranslateCTM(context, 0, -fontSize);
-                [label.layer renderInContext:context];
-                CGContextTranslateCTM(context, 0, fontSize);
-                CGContextConcatCTM(context, CGAffineTransformInvert(transform));
-
-                [emoji addObject:label];
-                [emojiTransform addObject:[NSValue valueWithCGAffineTransform:transform]];
+//                UILabel *label = [[UILabel alloc] init];
+//                CFIndex startIndex = indices[g];
+//                long len = MAX(1, endIndex - startIndex);
+//                NSRange range = NSMakeRange(startIndex, len);
+//                NSString* currChars = [str substringWithRange:range];
+//                label.text = currChars;
+//                label.opaque = NO;
+//                label.backgroundColor = UIColor.clearColor;
+//                UIFont * customFont = [UIFont systemFontOfSize:fontSize];
+//
+//                CGSize measuredSize = [currChars sizeWithAttributes:
+//                                       @{NSFontAttributeName:customFont}];
+//                label.font = customFont;
+//                CGFloat width = ceil(measuredSize.width);
+//                CGFloat height = ceil(measuredSize.height);
+//                CGRect bounds = CGRectMake(0, 0, width, height);
+//                label.frame = bounds;
+//
+//                CGContextConcatCTM(context, transform);
+//                CGContextTranslateCTM(context, 0, -fontSize);
+//                [label.layer renderInContext:context];
+//                CGContextTranslateCTM(context, 0, fontSize);
+//                CGContextConcatCTM(context, CGAffineTransformInvert(transform));
+//
+//                [emoji addObject:label];
+//                [emojiTransform addObject:[NSValue valueWithCGAffineTransform:transform]];
             } else {
                 transform = CGAffineTransformScale(transform, 1.0, -1.0);
                 CGPathAddPath(path, &transform, glyphPath);
