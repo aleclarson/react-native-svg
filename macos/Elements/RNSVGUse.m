@@ -103,21 +103,13 @@
     self.frame = bounds;
 }
 
-- (NSView *)hitTest:(CGPoint)point {
+- (NSView *)hitTest:(CGPoint)point
+{
     CGPoint transformed = CGPointApplyAffineTransform(point, self.invmatrix);
-    transformed =  CGPointApplyAffineTransform(transformed, self.invTransform);
-    RNSVGNode const* template = [self.rootView getDefinedTemplate:self.href];
-    if (event) {
-        self.active = NO;
-    } else if (self.active) {
-        return self;
-    }
-    NSView const* hitChild = [template hitTest:transformed withEvent:event];
-    if (hitChild) {
-        self.active = YES;
-        return self;
-    }
-    return nil;
+    transformed = CGPointApplyAffineTransform(transformed, self.invTransform);
+
+    RNSVGNode *template = [self.rootView getDefinedTemplate:self.href];
+    return [template hitTest:transformed] ? self : nil;
 }
 
 @end

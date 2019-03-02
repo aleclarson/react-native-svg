@@ -449,13 +449,6 @@ UInt32 saturate(CGFloat value) {
         return nil;
     }
 
-    if (self.active) {
-        if (!event) {
-            self.active = NO;
-        }
-        return self;
-    }
-
     CGPoint transformed = CGPointApplyAffineTransform(point, self.invmatrix);
     transformed = CGPointApplyAffineTransform(transformed, self.invTransform);
 
@@ -478,7 +471,7 @@ UInt32 saturate(CGFloat value) {
             }
         } else {
             RNSVGRenderable *clipGroup = (RNSVGRenderable*)clipNode;
-            if (![clipGroup hitTest:transformed withEvent:event]) {
+            if (![clipGroup hitTest:transformed]) {
                 return nil;
             }
         }

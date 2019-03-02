@@ -167,17 +167,9 @@
             }
         } else {
             RNSVGRenderable *clipGroup = (RNSVGRenderable*)clipNode;
-            if (![clipGroup hitTest:transformed withEvent:event]) {
+            if (![clipGroup hitTest:transformed]) {
                 return nil;
             }
-        }
-    }
-
-    if (!event) {
-        NSPredicate *const anyActive = [NSPredicate predicateWithFormat:@"active == TRUE"];
-        NSArray *const filtered = [self.subviews filteredArrayUsingPredicate:anyActive];
-        if ([filtered count] != 0) {
-            return [filtered.lastObject hitTest:transformed withEvent:event];
         }
     }
 
@@ -187,24 +179,20 @@
                 continue;
             }
             RNSVGNode* svgNode = (RNSVGNode*)node;
-            if (event) {
-                svgNode.active = NO;
-            }
-            NSView *hitChild = [svgNode hitTest:transformed withEvent:event];
+            NSView *hitChild = [svgNode hitTest:transformed];
             if (hitChild) {
-                svgNode.active = YES;
                 return (svgNode.responsible || (svgNode != hitChild)) ? hitChild : self;
             }
         } else if ([node isKindOfClass:[RNSVGRootView class]]) {
             RNSVGRootView* rootView = (RNSVGRootView*)node;
-            NSView *hitChild = [rootView hitTest:transformed withEvent:event];
+            NSView *hitChild = [rootView hitTest:transformed];
             if (hitChild) {
                 return hitChild;
             }
         }
     }
 
-    NSView *hitSelf = [super hitTest:transformed withEvent:event];
+    NSView *hitSelf = [super hitTest:transformed];
     if (hitSelf) {
         return hitSelf;
     }
