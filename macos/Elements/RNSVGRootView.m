@@ -246,12 +246,13 @@
 
 - (NSString *)getDataURL
 {
-    UIGraphicsBeginImageContextWithOptions(_boundingBox.size, NO, 0);
-    [self drawRect:_boundingBox];
-    NSData *imageData = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
-    NSString *base64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-    UIGraphicsEndImageContext();
-    return base64;
+//    UIGraphicsBeginImageContextWithOptions(_boundingBox.size, NO, 0);
+//    [self drawRect:_boundingBox];
+//    NSData *imageData = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext());
+//    NSString *base64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+//    UIGraphicsEndImageContext();
+//    return base64;
+  return @"";
 }
 
 - (void)defineClipPath:(__kindof RNSVGNode *)clipPath clipPathName:(NSString *)clipPathName
