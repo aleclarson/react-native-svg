@@ -158,11 +158,6 @@ CGFloat const RNSVG_DEFAULT_FONT_SIZE = 12;
     return [glyphContext getFontSize];
 }
 
-- (void)reactSetInheritedBackgroundColor:(UIColor *)inheritedBackgroundColor
-{
-    self.backgroundColor = inheritedBackgroundColor;
-}
-
 - (void)setName:(NSString *)name
 {
     if ([name isEqualToString:_name]) {

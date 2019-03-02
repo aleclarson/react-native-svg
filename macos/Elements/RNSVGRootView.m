@@ -253,11 +253,6 @@
     return base64;
 }
 
-- (void)reactSetInheritedBackgroundColor:(UIColor *)inheritedBackgroundColor
-{
-    self.backgroundColor = inheritedBackgroundColor;
-}
-
 - (void)defineClipPath:(__kindof RNSVGNode *)clipPath clipPathName:(NSString *)clipPathName
 {
     if (!_clipPaths) {
