@@ -78,11 +78,6 @@
     [self invalidate];
 }
 
-- (NSView *)hitTest:(NSPoint)point
-{
-    return nil;
-}
-
 - (void)parseReference
 {
     self.dirty = false;

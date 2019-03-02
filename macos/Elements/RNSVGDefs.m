@@ -27,10 +27,5 @@
     }];
 }
 
-- (NSView *)hitTest:(CGPoint)point
-{
-    return nil;
-}
-
 @end
 
