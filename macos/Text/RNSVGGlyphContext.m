@@ -9,88 +9,88 @@
 @interface RNSVGGlyphContext ()
 {
     // Current stack (one per node push/pop)
-    NSMutableArray *mFontContext_;
+    NSMutableArray *_fontContext;
 
     // Unique input attribute lists (only added if node sets a value)
-    NSMutableArray<NSArray<RNSVGLength*>*> *mXsContext_;
-    NSMutableArray<NSArray<RNSVGLength*>*> *mYsContext_;
-    NSMutableArray<NSArray<RNSVGLength*>*> *mDXsContext_;
-    NSMutableArray<NSArray<RNSVGLength*>*> *mDYsContext_;
-    NSMutableArray<NSArray<RNSVGLength*>*> *mRsContext_;
+    NSMutableArray<NSArray<RNSVGLength*>*> *_xsContext;
+    NSMutableArray<NSArray<RNSVGLength*>*> *_ysContext;
+    NSMutableArray<NSArray<RNSVGLength*>*> *_dxsContext;
+    NSMutableArray<NSArray<RNSVGLength*>*> *_dysContext;
+    NSMutableArray<NSArray<RNSVGLength*>*> *_rsContext;
 
     // Unique index into attribute list (one per unique list)
-    NSMutableArray<NSNumber*> *mXIndices_;
-    NSMutableArray<NSNumber*> *mYIndices_;
-    NSMutableArray<NSNumber*> *mDXIndices_;
-    NSMutableArray<NSNumber*> *mDYIndices_;
-    NSMutableArray<NSNumber*> *mRIndices_;
+    NSMutableArray<NSNumber*> *_xIndices;
+    NSMutableArray<NSNumber*> *_yIndices;
+    NSMutableArray<NSNumber*> *_dxIndices;
+    NSMutableArray<NSNumber*> *_dyIndices;
+    NSMutableArray<NSNumber*> *_rIndices;
 
     // Index of unique context used (one per node push/pop)
-    NSMutableArray<NSNumber*> *mXsIndices_;
-    NSMutableArray<NSNumber*> *mYsIndices_;
-    NSMutableArray<NSNumber*> *mDXsIndices_;
-    NSMutableArray<NSNumber*> *mDYsIndices_;
-    NSMutableArray<NSNumber*> *mRsIndices_;
+    NSMutableArray<NSNumber*> *_xsIndices;
+    NSMutableArray<NSNumber*> *_ysIndices;
+    NSMutableArray<NSNumber*> *_dxsIndices;
+    NSMutableArray<NSNumber*> *_dysIndices;
+    NSMutableArray<NSNumber*> *_rsIndices;
 
     // Calculated on push context, percentage and em length depends on parent font size
-    CGFloat mFontSize_;
-    RNSVGFontData *topFont_;
+    CGFloat _fontSize;
+    RNSVGFontData *_topFont;
 
     // Current accumulated values
     // https://www.w3.org/TR/SVG/types.html#DataTypeCoordinate
     // <coordinate> syntax is the same as that for <length>
-    CGFloat mX_;
-    CGFloat mY_;
+    CGFloat _x;
+    CGFloat _y;
 
     // https://www.w3.org/TR/SVG/types.html#Length
-    CGFloat mDX_;
-    CGFloat mDY_;
+    CGFloat _dx;
+    CGFloat _dy;
 
     // Current <list-of-coordinates> SVGLengthList
     // https://www.w3.org/TR/SVG/types.html#InterfaceSVGLengthList
     // https://www.w3.org/TR/SVG/types.html#DataTypeCoordinates
 
     // https://www.w3.org/TR/SVG/text.html#TSpanElementXAttribute
-    NSArray<RNSVGLength*> *mXs_;
+    NSArray<RNSVGLength*> *_xs;
 
     // https://www.w3.org/TR/SVG/text.html#TSpanElementYAttribute
-    NSArray<RNSVGLength*> *mYs_;
+    NSArray<RNSVGLength*> *_ys;
 
     // Current <list-of-lengths> SVGLengthList
     // https://www.w3.org/TR/SVG/types.html#DataTypeLengths
 
     // https://www.w3.org/TR/SVG/text.html#TSpanElementDXAttribute
-    NSArray<RNSVGLength*> *mDXs_;
+    NSArray<RNSVGLength*> *_dxs;
 
     // https://www.w3.org/TR/SVG/text.html#TSpanElementDYAttribute
-    NSArray<RNSVGLength*> *mDYs_;
+    NSArray<RNSVGLength*> *_dys;
 
     // Current <list-of-numbers> SVGLengthList
     // https://www.w3.org/TR/SVG/types.html#DataTypeNumbers
 
     // https://www.w3.org/TR/SVG/text.html#TSpanElementRotateAttribute
-    NSArray<RNSVGLength*> *mRs_;
+    NSArray<RNSVGLength*> *_rs;
 
     // Current attribute list index
-    long mXsIndex_;
-    long mYsIndex_;
-    long mDXsIndex_;
-    long mDYsIndex_;
-    long mRsIndex_;
+    long _xsIndex;
+    long _ysIndex;
+    long _dxsIndex;
+    long _dysIndex;
+    long _rsIndex;
 
     // Current value index in current attribute list
-    long mXIndex_;
-    long mYIndex_;
-    long mDXIndex_;
-    long mDYIndex_;
-    long mRIndex_;
+    long _xIndex;
+    long _yIndex;
+    long _dxIndex;
+    long _dyIndex;
+    long _rIndex;
 
     // Top index of stack
-    long mTop_;
+    long _top;
 
     // Constructor parameters
-    CGFloat mWidth_;
-    CGFloat mHeight_;
+    CGFloat _width;
+    CGFloat _height;
 }
 
 - (void)pushContext:(RNSVGText*)node
@@ -111,56 +111,56 @@
                        height:(CGFloat)height
 {
     if (self = [super init]) {
-      self->mFontContext_ = [[NSMutableArray alloc]init];
-      self->mXsContext_ = [[NSMutableArray alloc]init];
-      self->mYsContext_ = [[NSMutableArray alloc]init];
-      self->mDXsContext_ = [[NSMutableArray alloc]init];
-      self->mDYsContext_ = [[NSMutableArray alloc]init];
-      self->mRsContext_ = [[NSMutableArray alloc]init];
+      _fontContext = [NSMutableArray new];
+      _xsContext = [NSMutableArray new];
+      _ysContext = [NSMutableArray new];
+      _dxsContext = [NSMutableArray new];
+      _dysContext = [NSMutableArray new];
+      _rsContext = [NSMutableArray new];
 
-      self->mXIndices_ = [[NSMutableArray alloc]init];
-      self->mYIndices_ = [[NSMutableArray alloc]init];
-      self->mDXIndices_ = [[NSMutableArray alloc]init];
-      self->mDYIndices_ = [[NSMutableArray alloc]init];
-      self->mRIndices_ = [[NSMutableArray alloc]init];
+     _xIndices = [NSMutableArray new];
+      _yIndices = [NSMutableArray new];
+      _dxIndices = [NSMutableArray new];
+      _dyIndices = [NSMutableArray new];
+      _rIndices = [NSMutableArray new];
 
-      self->mXsIndices_ = [[NSMutableArray alloc]init];
-      self->mYsIndices_ = [[NSMutableArray alloc]init];
-      self->mDXsIndices_ = [[NSMutableArray alloc]init];
-      self->mDYsIndices_ = [[NSMutableArray alloc]init];
-      self->mRsIndices_ = [[NSMutableArray alloc]init];
+      _xsIndices = [NSMutableArray new];
+      _ysIndices = [NSMutableArray new];
+      _dxsIndices = [NSMutableArray new];
+      _dysIndices = [NSMutableArray new];
+      _rsIndices = [NSMutableArray new];
 
-      self->mFontSize_ = RNSVGFontData_DEFAULT_FONT_SIZE;
-      self->topFont_ = [RNSVGFontData Defaults];
+      _fontSize = RNSVGFontData_DEFAULT_FONT_SIZE;
+      _topFont = [RNSVGFontData Defaults];
 
-      self->mXs_ = [[NSArray alloc]init];
-      self->mYs_ = [[NSArray alloc]init];
-      self->mDXs_ = [[NSArray alloc]init];
-      self->mDYs_ = [[NSArray alloc]init];
-      self->mRs_ = [[NSArray alloc]initWithObjects:[RNSVGLength lengthWithNumber:0], nil];
+      _xs = [NSArray new];
+      _ys = [NSArray new];
+      _dxs = [NSArray new];
+      _dys = [NSArray new];
+      _rs = [NSArray arrayWithObjects:[RNSVGLength lengthWithNumber:0], nil];
 
-      self->mXIndex_ = -1;
-      self->mYIndex_ = -1;
-      self->mDXIndex_ = -1;
-      self->mDYIndex_ = -1;
-      self->mRIndex_ = -1;
+      _xIndex = -1;
+      _yIndex = -1;
+      _dxIndex = -1;
+      _dyIndex = -1;
+      _rIndex = -1;
 
-      self->mWidth_ = width;
-      self->mHeight_ = height;
+      _width = width;
+      _height = height;
 
-      [self->mXsContext_ addObject:self->mXs_];
-      [self->mYsContext_ addObject:self->mYs_];
-      [self->mDXsContext_ addObject:self->mDXs_];
-      [self->mDYsContext_ addObject:self->mDYs_];
-      [self->mRsContext_ addObject:self->mRs_];
+      [_xsContext addObject:_xs];
+      [_ysContext addObject:_ys];
+      [_dxsContext addObject:_dxs];
+      [_dysContext addObject:_dys];
+      [_rsContext addObject:_rs];
 
-      [self->mXIndices_ addObject:[NSNumber numberWithLong:self->mXIndex_]];
-      [self->mYIndices_ addObject:[NSNumber numberWithLong:self->mYIndex_]];
-      [self->mDXIndices_ addObject:[NSNumber numberWithLong:self->mDXIndex_]];
-      [self->mDYIndices_ addObject:[NSNumber numberWithLong:self->mDYIndex_]];
-      [self->mRIndices_ addObject:[NSNumber numberWithLong:self->mRIndex_]];
+      [_xIndices addObject:[NSNumber numberWithLong:_xIndex]];
+      [_yIndices addObject:[NSNumber numberWithLong:_yIndex]];
+      [_dxIndices addObject:[NSNumber numberWithLong:_dxIndex]];
+      [_dyIndices addObject:[NSNumber numberWithLong:_dyIndex]];
+      [_rIndices addObject:[NSNumber numberWithLong:_rIndex]];
 
-      [self->mFontContext_ addObject:self->topFont_];
+      [_fontContext addObject:_topFont];
       [self pushIndices];
     }
     return self;
@@ -168,11 +168,11 @@
 
 - (CTFontRef)getGlyphFont
 {
-    NSString *fontFamily = topFont_->fontFamily;
-    NSNumber * fontSize = [NSNumber numberWithDouble:topFont_->fontSize];
+    NSString *fontFamily = _topFont->fontFamily;
+    NSNumber * fontSize = [NSNumber numberWithDouble:_topFont->fontSize];
 
-    NSString * fontWeight = [RNSVGFontWeightToString(topFont_->fontWeight) lowercaseString];
-    NSString * fontStyle = RNSVGFontStyleStrings[topFont_->fontStyle];
+    NSString * fontWeight = [RNSVGFontWeightToString(_topFont->fontWeight) lowercaseString];
+    NSString * fontStyle = RNSVGFontStyleStrings[_topFont->fontStyle];
 
     BOOL fontFamilyFound = NO;
     NSArray *supportedFontFamilyNames = [UIFont familyNames];
@@ -200,22 +200,22 @@
 
 - (void)pushIndices
 {
-    [self->mXsIndices_ addObject:[NSNumber numberWithLong:self->mXsIndex_]];
-    [self->mYsIndices_ addObject:[NSNumber numberWithLong:self->mYsIndex_]];
-    [self->mDXsIndices_ addObject:[NSNumber numberWithLong:self->mDXsIndex_]];
-    [self->mDYsIndices_ addObject:[NSNumber numberWithLong:self->mDYsIndex_]];
-    [self->mRsIndices_ addObject:[NSNumber numberWithLong:self->mRsIndex_]];
+    [_xsIndices addObject:[NSNumber numberWithLong:_xsIndex]];
+    [_ysIndices addObject:[NSNumber numberWithLong:_ysIndex]];
+    [_dxsIndices addObject:[NSNumber numberWithLong:_dxsIndex]];
+    [_dysIndices addObject:[NSNumber numberWithLong:_dysIndex]];
+    [_rsIndices addObject:[NSNumber numberWithLong:_rsIndex]];
 }
 
 - (RNSVGFontData *)getFont
 {
-    return topFont_;
+    return _topFont;
 }
 
 - (RNSVGFontData *)getTopOrParentFont:(RNSVGGroup *)child
 {
-    if (self->mTop_ > 0) {
-        return self->topFont_;
+    if (_top > 0) {
+        return _topFont;
     } else {
         RNSVGGroup* parentRoot = [child getParentTextRoot];
         RNSVGFontData* Defaults = [RNSVGFontData Defaults];
@@ -233,16 +233,16 @@
 - (void)pushNode:(RNSVGGroup *)node andFont:(NSDictionary *)font
 {
     RNSVGFontData *parent = [self getTopOrParentFont:node];
-    self->mTop_++;
+    _top++;
     if (font == nil) {
-        [self->mFontContext_ addObject:parent];
+        [_fontContext addObject:parent];
         return;
     }
     RNSVGFontData *data = [RNSVGFontData initWithNSDictionary:font
                                                        parent:parent];
-    self->mFontSize_ = data->fontSize;
-    [self->mFontContext_ addObject:data];
-    self->topFont_ = data;
+    _fontSize = data->fontSize;
+    [_fontContext addObject:data];
+    _topFont = data;
 }
 
 - (void)pushContext:(RNSVGGroup*)node
@@ -262,92 +262,92 @@
 {
     [self pushNode:(RNSVGGroup*)node andFont:font];
     if (x != nil && [x count] != 0) {
-        mXsIndex_++;
-        mXIndex_ = -1;
-        [mXIndices_ addObject:[NSNumber numberWithLong:mXIndex_]];
-        mXs_ = x;
-        [mXsContext_ addObject:mXs_];
+        _xsIndex++;
+        _xIndex = -1;
+        [_xIndices addObject:[NSNumber numberWithLong:_xIndex]];
+        _xs = x;
+        [_xsContext addObject:_xs];
     }
     if (y != nil && [y count] != 0) {
-        mYsIndex_++;
-        mYIndex_ = -1;
-        [mYIndices_ addObject:[NSNumber numberWithLong:mYIndex_]];
-        mYs_ = y;
-        [mYsContext_ addObject:mYs_];
+        _ysIndex++;
+        _yIndex = -1;
+        [_yIndices addObject:[NSNumber numberWithLong:_yIndex]];
+        _ys = y;
+        [_ysContext addObject:_ys];
     }
     if (deltaX != nil && [deltaX count] != 0) {
-        mDXsIndex_++;
-        mDXIndex_ = -1;
-        [mDXIndices_ addObject:[NSNumber numberWithLong:mDXIndex_]];
-        mDXs_ = deltaX;
-        [mDXsContext_ addObject:mDXs_];
+        _dxsIndex++;
+        _dxIndex = -1;
+        [_dxIndices addObject:[NSNumber numberWithLong:_dxIndex]];
+        _dxs = deltaX;
+        [_dxsContext addObject:_dxs];
     }
     if (deltaY != nil && [deltaY count] != 0) {
-        mDYsIndex_++;
-        mDYIndex_ = -1;
-        [mDYIndices_ addObject:[NSNumber numberWithLong:mDYIndex_]];
-        mDYs_ = deltaY;
-        [mDYsContext_ addObject:mDYs_];
+        _dysIndex++;
+        _dyIndex = -1;
+        [_dyIndices addObject:[NSNumber numberWithLong:_dyIndex]];
+        _dys = deltaY;
+        [_dysContext addObject:_dys];
     }
     if (rotate != nil && [rotate count] != 0) {
-        mRsIndex_++;
-        mRIndex_ = -1;
-        [mRIndices_ addObject:[NSNumber numberWithLong:mRIndex_]];
-        mRs_ = rotate;
-        [mRsContext_ addObject:mRs_];
+        _rsIndex++;
+        _rIndex = -1;
+        [_rIndices addObject:[NSNumber numberWithLong:_rIndex]];
+        _rs = rotate;
+        [_rsContext addObject:_rs];
     }
     [self pushIndices];
 }
 
 - (void)popContext
 {
-    [mFontContext_ removeLastObject];
-    [mXsIndices_ removeLastObject];
-    [mYsIndices_ removeLastObject];
-    [mDXsIndices_ removeLastObject];
-    [mDYsIndices_ removeLastObject];
-    [mRsIndices_ removeLastObject];
+    [_fontContext removeLastObject];
+    [_xsIndices removeLastObject];
+    [_ysIndices removeLastObject];
+    [_dxsIndices removeLastObject];
+    [_dysIndices removeLastObject];
+    [_rsIndices removeLastObject];
 
-    mTop_--;
+    _top--;
 
-    long x = mXsIndex_;
-    long y = mYsIndex_;
-    long dx = mDXsIndex_;
-    long dy = mDYsIndex_;
-    long r = mRsIndex_;
+    long x = _xsIndex;
+    long y = _ysIndex;
+    long dx = _dxsIndex;
+    long dy = _dysIndex;
+    long r = _rsIndex;
 
-    topFont_ = [mFontContext_ lastObject];
+    _topFont = [_fontContext lastObject];
 
-    mXsIndex_ = [[mXsIndices_ lastObject] longValue];
-    mYsIndex_ = [[mYsIndices_ lastObject] longValue];
-    mDXsIndex_ = [[mDXsIndices_ lastObject] longValue];
-    mDYsIndex_ = [[mDYsIndices_ lastObject] longValue];
-    mRsIndex_ = [[mRsIndices_ lastObject] longValue];
+    _xsIndex = [[_xsIndices lastObject] longValue];
+    _ysIndex = [[_ysIndices lastObject] longValue];
+    _dxsIndex = [[_dxsIndices lastObject] longValue];
+    _dysIndex = [[_dysIndices lastObject] longValue];
+    _rsIndex = [[_rsIndices lastObject] longValue];
 
-    if (x != mXsIndex_) {
-        [mXsContext_ removeObjectAtIndex:x];
-        mXs_ = [mXsContext_ objectAtIndex:mXsIndex_];
-        mXIndex_ = [[mXIndices_ objectAtIndex:mXsIndex_] longValue];
+    if (x != _xsIndex) {
+        [_xsContext removeObjectAtIndex:x];
+        _xs = [_xsContext objectAtIndex:_xsIndex];
+        _xIndex = [[_xIndices objectAtIndex:_xsIndex] longValue];
     }
-    if (y != mYsIndex_) {
-        [mYsContext_ removeObjectAtIndex:y];
-        mYs_ = [mYsContext_ objectAtIndex:mYsIndex_];
-        mYIndex_ = [[mYIndices_ objectAtIndex:mYsIndex_] longValue];
+    if (y != _ysIndex) {
+        [_ysContext removeObjectAtIndex:y];
+        _ys = [_ysContext objectAtIndex:_ysIndex];
+        _yIndex = [[_yIndices objectAtIndex:_ysIndex] longValue];
     }
-    if (dx != mDXsIndex_) {
-        [mDXsContext_ removeObjectAtIndex:dx];
-        mDXs_ = [mDXsContext_ objectAtIndex:mDXsIndex_];
-        mDXIndex_ = [[mDXIndices_ objectAtIndex:mDXsIndex_] longValue];
+    if (dx != _dxsIndex) {
+        [_dxsContext removeObjectAtIndex:dx];
+        _dxs = [_dxsContext objectAtIndex:_dxsIndex];
+        _dxIndex = [[_dxIndices objectAtIndex:_dxsIndex] longValue];
     }
-    if (dy != mDYsIndex_) {
-        [mDYsContext_ removeObjectAtIndex:dy];
-        mDYs_ = [mDYsContext_ objectAtIndex:mDYsIndex_];
-        mDYIndex_ = [[mDYIndices_ objectAtIndex:mDYsIndex_] longValue];
+    if (dy != _dysIndex) {
+        [_dysContext removeObjectAtIndex:dy];
+        _dys = [_dysContext objectAtIndex:_dysIndex];
+        _dyIndex = [[_dyIndices objectAtIndex:_dysIndex] longValue];
     }
-    if (r != mRsIndex_) {
-        [mRsContext_ removeObjectAtIndex:r];
-        mRs_ = [mRsContext_ objectAtIndex:mRsIndex_];
-        mRIndex_ = [[mRIndices_ objectAtIndex:mRsIndex_] longValue];
+    if (r != _rsIndex) {
+        [_rsContext removeObjectAtIndex:r];
+        _rs = [_rsContext objectAtIndex:_rsIndex];
+        _rIndex = [[_rIndices objectAtIndex:_rsIndex] longValue];
     }
 }
 
@@ -392,91 +392,91 @@
  */
 - (CGFloat)getFontSize
 {
-    return mFontSize_;
+    return _fontSize;
 }
 
 - (CGFloat)nextXWithDouble:(CGFloat)advance
 {
-    [RNSVGGlyphContext incrementIndices:mXIndices_ topIndex:mXsIndex_];
-    long nextIndex = mXIndex_ + 1;
-    if (nextIndex < [mXs_ count]) {
-        mDX_ = 0;
-        mXIndex_ = nextIndex;
-        RNSVGLength *length = [mXs_ objectAtIndex:nextIndex];
-        mX_ = [RNSVGPropHelper fromRelative:length
-                                   relative:mWidth_
-                                   fontSize:mFontSize_];
+    [RNSVGGlyphContext incrementIndices:_xIndices topIndex:_xsIndex];
+    long nextIndex = _xIndex + 1;
+    if (nextIndex < [_xs count]) {
+        _dx = 0;
+        _xIndex = nextIndex;
+        RNSVGLength *length = [_xs objectAtIndex:nextIndex];
+        _x = [RNSVGPropHelper fromRelative:length
+                                   relative:_width
+                                   fontSize:_fontSize];
     }
-    mX_ += advance;
-    return mX_;
+    _x += advance;
+    return _x;
 }
 
 - (CGFloat)nextY
 {
-    [RNSVGGlyphContext incrementIndices:mYIndices_ topIndex:mYsIndex_];
-    long nextIndex = mYIndex_ + 1;
-    if (nextIndex < [mYs_ count]) {
-        mDY_ = 0;
-        mYIndex_ = nextIndex;
-        RNSVGLength *length = [mYs_ objectAtIndex:nextIndex];
-        mY_ = [RNSVGPropHelper fromRelative:length
-                                   relative:mHeight_
-                                   fontSize:mFontSize_];
+    [RNSVGGlyphContext incrementIndices:_yIndices topIndex:_ysIndex];
+    long nextIndex = _yIndex + 1;
+    if (nextIndex < [_ys count]) {
+        _dy = 0;
+        _yIndex = nextIndex;
+        RNSVGLength *length = [_ys objectAtIndex:nextIndex];
+        _y = [RNSVGPropHelper fromRelative:length
+                                   relative:_height
+                                   fontSize:_fontSize];
     }
-    return mY_;
+    return _y;
 }
 
 - (CGFloat)nextDeltaX
 {
-    [RNSVGGlyphContext incrementIndices:mDXIndices_ topIndex:mDXsIndex_];
-    long nextIndex = mDXIndex_ + 1;
-    if (nextIndex < [mDXs_ count]) {
-        mDXIndex_ = nextIndex;
-        RNSVGLength *length = [mDXs_ objectAtIndex:nextIndex];
+    [RNSVGGlyphContext incrementIndices:_dxIndices topIndex:_dxsIndex];
+    long nextIndex = _dxIndex + 1;
+    if (nextIndex < [_dxs count]) {
+        _dxIndex = nextIndex;
+        RNSVGLength *length = [_dxs objectAtIndex:nextIndex];
         CGFloat val = [RNSVGPropHelper fromRelative:length
-                                          relative:mWidth_
-                                          fontSize:mFontSize_];
-        mDX_ += val;
+                                          relative:_width
+                                          fontSize:_fontSize];
+        _dx += val;
     }
-    return mDX_;
+    return _dx;
 }
 
 - (CGFloat)nextDeltaY
 {
-    [RNSVGGlyphContext incrementIndices:mDYIndices_ topIndex:mDYsIndex_];
-    long nextIndex = mDYIndex_ + 1;
-    if (nextIndex < [mDYs_ count]) {
-        mDYIndex_ = nextIndex;
-        RNSVGLength *length = [mDYs_ objectAtIndex:nextIndex];
+    [RNSVGGlyphContext incrementIndices:_dyIndices topIndex:_dysIndex];
+    long nextIndex = _dyIndex + 1;
+    if (nextIndex < [_dys count]) {
+        _dyIndex = nextIndex;
+        RNSVGLength *length = [_dys objectAtIndex:nextIndex];
         CGFloat val = [RNSVGPropHelper fromRelative:length
-                                          relative:mHeight_
-                                          fontSize:mFontSize_];
-        mDY_ += val;
+                                          relative:_height
+                                          fontSize:_fontSize];
+        _dy += val;
     }
-    return mDY_;
+    return _dy;
 }
 
 - (CGFloat)nextRotation
 {
-    [RNSVGGlyphContext incrementIndices:mRIndices_ topIndex:mRsIndex_];
-    long nextIndex = mRIndex_ + 1;
-    long count = [mRs_ count];
+    [RNSVGGlyphContext incrementIndices:_rIndices topIndex:_rsIndex];
+    long nextIndex = _rIndex + 1;
+    long count = [_rs count];
     if (nextIndex < count) {
-        mRIndex_ = nextIndex;
+        _rIndex = nextIndex;
     } else {
-        mRIndex_ = count - 1;
+        _rIndex = count - 1;
     }
-    return [mRs_[mRIndex_] value];
+    return [_rs[_rIndex] value];
 }
 
 - (CGFloat)getWidth
 {
-    return mWidth_;
+    return _width;
 }
 
 - (CGFloat)getHeight
 {
-    return mHeight_;
+    return _height;
 }
 
 @end
