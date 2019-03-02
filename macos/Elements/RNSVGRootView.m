@@ -77,7 +77,7 @@
         rendered = false;
         return;
     }
-    [self setNeedsDisplay];
+    [self setNeedsDisplay:YES];
 }
 
 - (void)setMinX:(CGFloat)minX
