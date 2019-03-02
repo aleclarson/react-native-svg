@@ -175,13 +175,18 @@
     NSString * fontStyle = RNSVGFontStyleStrings[_topFont->fontStyle];
 
     BOOL fontFamilyFound = NO;
-    NSArray *supportedFontFamilyNames = [UIFont familyNames];
+    NSFontManager *fontManager = [NSFontManager sharedFontManager];
+    NSArray *supportedFontFamilyNames = fontManager.availableFontFamilies;
 
     if ([supportedFontFamilyNames containsObject:fontFamily]) {
         fontFamilyFound = YES;
     } else {
         for (NSString *fontFamilyName in supportedFontFamilyNames) {
-            if ([[UIFont fontNamesForFamilyName: fontFamilyName] containsObject:fontFamily]) {
+            NSArray *fontMembers = [fontManager availableMembersOfFontFamily:fontFamilyName];
+            NSUInteger index = [fontMembers indexOfObjectPassingTest:^BOOL(NSArray *fontMember, NSUInteger idx, BOOL *stop) {
+                return [fontMember[0] isEqualToString:fontFamily];
+            }];
+            if (index != NSNotFound) {
                 fontFamilyFound = YES;
                 break;
             }
